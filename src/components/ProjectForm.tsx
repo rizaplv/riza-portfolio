@@ -8,7 +8,7 @@ const CATEGORIES = [
   "UI Design",
   "3D Stage Design",
   "Event Production",
-  "Video Editing",
+  "Motion",
 ];
 
 interface ProjectFormData {
