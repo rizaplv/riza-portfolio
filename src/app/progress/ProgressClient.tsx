@@ -11,7 +11,7 @@ interface Task {
   category: string;
 }
 
-const PROGRESS_VERSION = 2;
+const PROGRESS_VERSION = 3;
 
 const initialTasks: Task[] = [
   { id: "1", title: "Setup Next.js + TypeScript + Tailwind", description: "Initialize project with Next.js 16, TypeScript, and Tailwind CSS v4", status: "completed", priority: "high", category: "Setup" },
@@ -28,7 +28,7 @@ const initialTasks: Task[] = [
   { id: "12", title: "Push to GitHub and deploy to Vercel", description: "Final deployment to production with all environment variables", status: "completed", priority: "high", category: "Deployment" },
   { id: "13", title: "Auto compress/resize images before upload", description: "Optimize images to reduce file size and improve loading speed", status: "completed", priority: "low", category: "Feature" },
   { id: "14", title: "Add SEO optimization", description: "Meta tags, Open Graph, structured data for better SEO", status: "completed", priority: "medium", category: "SEO" },
-  { id: "15", title: "Add contact form email notification", description: "Send email notification when someone submits contact form", status: "in-progress", priority: "low", category: "Feature" },
+  { id: "15", title: "Add contact form email notification", description: "Send email notification when someone submits contact form (Resend API)", status: "completed", priority: "low", category: "Feature" },
   { id: "16", title: "Add logout button in admin dashboard", description: "Tombol logout di header admin agar bisa keluar dari sesi dengan aman", status: "completed", priority: "high", category: "Admin" },
 ];
 
