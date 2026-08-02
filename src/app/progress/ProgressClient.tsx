@@ -11,7 +11,7 @@ interface Task {
   category: string;
 }
 
-const PROGRESS_VERSION = 3;
+const PROGRESS_VERSION = 4;
 
 const initialTasks: Task[] = [
   { id: "1", title: "Setup Next.js + TypeScript + Tailwind", description: "Initialize project with Next.js 16, TypeScript, and Tailwind CSS v4", status: "completed", priority: "high", category: "Setup" },
