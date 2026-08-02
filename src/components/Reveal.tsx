@@ -6,7 +6,7 @@ interface RevealProps {
   children: ReactNode;
   as?: ElementType;
   className?: string;
-  delay?: number; // index for stagger
+  delay?: number;
   id?: string;
 }
 
@@ -26,12 +26,9 @@ export default function Reveal({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(entry.target);
-        }
+        setVisible(entry.isIntersecting);
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.05 }
     );
 
     observer.observe(el);
