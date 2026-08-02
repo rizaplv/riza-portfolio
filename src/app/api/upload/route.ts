@@ -16,12 +16,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "File too large (max 5MB)" }, { status: 400 });
+    if (file.size > 10 * 1024 * 1024) {
+      return NextResponse.json({ error: "File too large (max 10MB)" }, { status: 400 });
     }
 
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    const ext = file.name.split(".").pop() || "jpg";
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const fileBuffer = Buffer.from(await file.arrayBuffer());
 
     if (!supabaseUrl || !supabaseKey) {
       const path = require("path");
@@ -29,19 +33,11 @@ export async function POST(req: NextRequest) {
       const uploadDir = path.join(process.cwd(), "public", "uploads");
       if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
-      const ext = path.extname(file.name) || ".jpg";
-      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
       const filePath = path.join(uploadDir, fileName);
-
-      const bytes = await file.arrayBuffer();
-      fs.writeFileSync(filePath, Buffer.from(bytes));
+      fs.writeFileSync(filePath, fileBuffer);
 
       return NextResponse.json({ url: `/uploads/${fileName}` });
     }
-
-    const ext = file.name.split(".").pop() || "jpg";
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-    const fileBuffer = Buffer.from(await file.arrayBuffer());
 
     const uploadRes = await fetch(`${supabaseUrl}/storage/v1/object/portfolio/${fileName}`, {
       method: "POST",

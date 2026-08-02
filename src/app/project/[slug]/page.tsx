@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 
@@ -31,6 +32,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold mb-4">{project.title}</h1>
         {project.client && <p className="text-ink-light mb-4">Client: {project.client}</p>}
+
         <div className="flex flex-wrap gap-2">
           {tags.map((tag: string) => (
             <span key={tag} className="text-sm text-ink-light px-3 py-1 bg-surface rounded-full">{tag}</span>
@@ -39,7 +41,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </Reveal>
 
       <Reveal delay={1} className="rounded-2xl overflow-hidden bg-surface mb-12">
-        <img src={project.coverImage} alt={project.title} className="w-full h-auto object-contain" />
+        <Image
+          src={project.coverImage}
+          alt={project.title}
+          width={1200}
+          height={900}
+          className="w-full h-auto object-contain"
+          unoptimized={project.coverImage?.includes("supabase.co") || false}
+        />
       </Reveal>
 
       <Reveal delay={0} className="prose prose-lg max-w-none mb-16">
@@ -53,11 +62,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {images.map((img: string, i: number) => (
               <Reveal key={i} delay={i % 2} className="rounded-xl overflow-hidden bg-surface border border-border">
-                <img
+                <Image
                   src={img}
                   alt={`Gallery ${i + 1}`}
+                  width={600}
+                  height={450}
                   className="w-full h-auto object-contain"
                   loading="lazy"
+                  unoptimized={img?.includes("supabase.co") || false}
                 />
               </Reveal>
             ))}
