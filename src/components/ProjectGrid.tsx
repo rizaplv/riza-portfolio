@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type Project = {
   id: string;
@@ -44,10 +45,14 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             href={`/project/${project.slug}`}
             className="group block rounded-2xl overflow-hidden bg-canvas-alt border border-border hover:shadow-lg transition-all duration-300"
           >
-            <div className="aspect-[4/3] overflow-hidden bg-surface">
-              <div
-                className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-                style={{ backgroundImage: `url(${project.coverImage})` }}
+            <div className="aspect-[4/3] overflow-hidden bg-surface relative">
+              <Image
+                src={project.coverImage}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-contain group-hover:scale-105 transition-transform duration-500"
+                unoptimized={project.coverImage?.includes("supabase.co") || false}
               />
             </div>
             <div className="p-5">
