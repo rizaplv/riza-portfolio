@@ -11,7 +11,7 @@ const CORE_SKILLS = ["UI/UX Design", "Visual Design", "3D Modeling", "Motion Gra
 const TOOLS = ["Photoshop", "Illustrator", "After Effects", "Premiere Pro", "SketchUp", "Blender", "Figma", "Resolume"];
 
 const EXPERIENCE = [
-  { title: "Graphic Designer & 3D Visual Lead", company: "Artha Kencana Cendekia", period: "Nov 2024 – Present" },
+  { title: "Graphic Designer & 3D Designer", company: "Artha Kencana Cendekia", period: "Nov 2024 – Present" },
   { title: "Compositor & UI Designer", company: "Mytripology", period: "Mar 2021 – Nov 2024" },
   { title: "Compositor", company: "Firenze Digital", period: "Feb 2020 – Sep 2020" },
   { title: "Graphic Designer", company: "PT Hero Supermarket Tbk", period: "Nov 2019 – Jan 2020" },
@@ -49,7 +49,7 @@ export default async function HomePage() {
               Graphic Designer, UI Designer & 3D Generalist
             </p>
             <p className="text-ink-light mb-10 max-w-md leading-relaxed">
-              I design visuals that bridge digital experiences and live environments — from clean interfaces to immersive stage production.
+              Visual designer crafting graphics, interfaces, 3D, and motion that bring ideas to life.
             </p>
             <div className="flex items-center gap-4">
               <Link href="#work" className="inline-flex px-8 py-3 bg-accent text-white rounded-full font-medium hover:bg-accent/90 transition-colors">
@@ -88,10 +88,10 @@ export default async function HomePage() {
               <Reveal delay={0}>
                 <p className="text-sm font-medium text-accent tracking-widest uppercase mb-3">About</p>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-                  Graphic designer & visual problem solver
+                  Multimedia designer & 3D Generalist
                 </h2>
                 <p className="text-ink-light max-w-md leading-relaxed">
-                  I design visuals that bridge digital experiences and live environments — from clean interfaces to immersive stage production.
+                  Visual designer crafting graphics, interfaces, 3D, and motion that bring ideas to life.
                 </p>
               </Reveal>
 
