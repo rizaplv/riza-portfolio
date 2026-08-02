@@ -11,6 +11,8 @@ interface Task {
   category: string;
 }
 
+const PROGRESS_VERSION = 2;
+
 const initialTasks: Task[] = [
   { id: "1", title: "Setup Next.js + TypeScript + Tailwind", description: "Initialize project with Next.js 16, TypeScript, and Tailwind CSS v4", status: "completed", priority: "high", category: "Setup" },
   { id: "2", title: "Setup Prisma + SQLite", description: "Configure Prisma ORM with SQLite database for local development", status: "completed", priority: "high", category: "Setup" },
@@ -38,11 +40,16 @@ export default function ProgressClient() {
   useEffect(() => {
     setIsClient(true);
     const saved = localStorage.getItem("portfolio-progress");
-    if (saved) {
+    const savedVersion = localStorage.getItem("portfolio-progress-version");
+    if (saved && savedVersion === String(PROGRESS_VERSION)) {
       try {
         const parsed = JSON.parse(saved);
         setTasks(parsed);
       } catch {}
+    } else {
+      // stale cache or first load — use initialTasks
+      localStorage.setItem("portfolio-progress", JSON.stringify(initialTasks));
+      localStorage.setItem("portfolio-progress-version", String(PROGRESS_VERSION));
     }
   }, []);
 
