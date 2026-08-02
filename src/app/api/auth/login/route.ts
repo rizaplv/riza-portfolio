@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
     await session.save();
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e: any) {
+    console.error("Login failed:", e?.message);
     return NextResponse.json({ error: "Login failed" }, { status: 500 });
   }
 }

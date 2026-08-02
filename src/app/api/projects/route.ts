@@ -3,20 +3,38 @@ import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/session";
 
 export async function GET() {
-  const session = await getSession();
-  if (!session.isLoggedIn) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  try {
+    const session = await getSession();
+    if (!session.isLoggedIn) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const projects = await prisma.project.findMany({ orderBy: { updatedAt: "desc" } });
-  return NextResponse.json(projects);
+  try {
+    const projects = await prisma.project.findMany({ orderBy: { updatedAt: "desc" } });
+    return NextResponse.json(projects);
+  } catch (e: any) {
+    console.error("GET /api/projects failed:", e?.message);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getSession();
-  if (!session.isLoggedIn) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  try {
+    const session = await getSession();
+    if (!session.isLoggedIn) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   try {
     const body = await req.json();
-    const slug = body.slug || body.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const slug =
+      body.slug ||
+      body.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
 
     const project = await prisma.project.create({
       data: {
@@ -36,6 +54,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(project);
   } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    console.error("POST /api/projects failed:", e?.message);
+    return NextResponse.json({ error: e?.message || "Create failed" }, { status: 500 });
   }
 }
