@@ -45,7 +45,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             href={`/project/${project.slug}`}
             className="group block rounded-2xl overflow-hidden bg-canvas-alt border border-border hover:shadow-lg transition-all duration-300"
           >
-            <div className="relative w-full bg-surface overflow-hidden rounded-t-2xl aspect-[3/4]">
+            <div className="relative w-full bg-surface overflow-hidden rounded-t-2xl aspect-[16/9]">
               <Image
                 src={project.coverImage}
                 alt={project.title}
