@@ -33,12 +33,17 @@ export default function AdminPage() {
 
   useEffect(() => {
     fetch("/api/projects")
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 401) { setUnauthorized(true); return []; }
-        return r.json();
+        const data = await r.json();
+        if (!Array.isArray(data)) {
+          console.error("Expected array, got:", typeof data);
+          return [];
+        }
+        return data;
       })
       .then((data) => { setProjects(data); setLoading(false); })
-      .catch(() => setLoading(false));
+      .catch((err) => { console.error("Fetch projects error:", err); setLoading(false); });
   }, []);
 
   if (unauthorized) { router.push("/admin/login"); return null; }
