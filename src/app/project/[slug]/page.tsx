@@ -40,15 +40,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       </Reveal>
 
-      <Reveal delay={1} className="rounded-2xl overflow-hidden bg-surface mb-12">
-        <Image
-          src={project.coverImage}
-          alt={project.title}
-          width={1200}
-          height={900}
-          className="w-full h-auto object-contain"
-          unoptimized={project.coverImage?.includes("supabase.co") || false}
-        />
+      <Reveal delay={1} className="bg-surface rounded-2xl overflow-hidden mb-12">
+        <div className="relative w-full pt-[56.25%]">
+          <Image
+            src={project.coverImage}
+            alt={project.title}
+            fill
+            sizes="100vw"
+            className="object-contain absolute inset-0 w-full h-full"
+            unoptimized={project.coverImage?.includes("supabase.co") || false}
+          />
+        </div>
       </Reveal>
 
       <Reveal delay={0} className="prose prose-lg max-w-none mb-16">

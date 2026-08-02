@@ -45,15 +45,17 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             href={`/project/${project.slug}`}
             className="group block rounded-2xl overflow-hidden bg-canvas-alt border border-border hover:shadow-lg transition-all duration-300"
           >
-            <div className="aspect-[4/3] overflow-hidden bg-surface relative">
-              <Image
-                src={project.coverImage}
-                alt={project.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-contain group-hover:scale-105 transition-transform duration-500"
-                unoptimized={project.coverImage?.includes("supabase.co") || false}
-              />
+            <div className="relative w-full bg-surface overflow-hidden rounded-t-2xl">
+              <div className="relative w-full pt-[75%]">
+                <Image
+                  src={project.coverImage}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-contain absolute inset-0 w-full h-full group-hover:scale-105 transition-transform duration-500"
+                  unoptimized={project.coverImage?.includes("supabase.co") || false}
+                />
+              </div>
             </div>
             <div className="p-5">
               <div className="flex items-center gap-2 mb-2">
