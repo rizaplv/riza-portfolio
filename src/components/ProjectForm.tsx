@@ -30,6 +30,12 @@ interface ProjectFormProps {
 
 export default function ProjectForm({ project }: ProjectFormProps) {
   const router = useRouter();
+  const [exiting, setExiting] = useState(false);
+
+  const navigateWithFade = (href: string) => {
+    setExiting(true);
+    setTimeout(() => router.push(href), 220);
+  };
   const projectId = project?.projectId || project?.id || null;
   const [form, setForm] = useState<ProjectFormData>({
     title: "",
@@ -240,8 +246,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
     });
 
     if (res.ok) {
-      router.push("/admin");
-      router.refresh();
+      navigateWithFade("/admin");
     } else {
       alert("Failed to save");
     }
@@ -249,11 +254,11 @@ export default function ProjectForm({ project }: ProjectFormProps) {
   };
 
   return (
-    <div className="min-h-screen bg-canvas-alt">
+    <div className={`min-h-screen bg-canvas-alt transition-all duration-300 ease-out ${exiting ? "opacity-0 translate-y-2" : "opacity-100"}`}>
       <header className="bg-canvas border-b border-border h-16 flex items-center px-6">
         <div className="max-w-3xl w-full mx-auto flex items-center justify-between">
           <h1 className="text-lg font-bold">{projectId ? "Edit Project" : "New Project"}</h1>
-          <button onClick={() => router.push("/admin")} className="text-sm text-ink-light hover:text-ink transition-colors">
+          <button onClick={() => navigateWithFade("/admin")} className="text-sm text-ink-light hover:text-ink transition-colors">
             Cancel
           </button>
         </div>

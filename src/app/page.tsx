@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import ProjectGrid from "@/components/ProjectGrid";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
+import AnimatedStatement from "@/components/AnimatedStatement";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -55,6 +56,8 @@ export default async function HomePage() {
           </div>
         </div>
       </Reveal>
+
+      <AnimatedStatement />
 
       <section className="px-6 sm:px-16 py-section max-w-7xl mx-auto">
         <Reveal delay={0} className="mb-12">

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProjectForm from "@/components/ProjectForm";
 import Loading from "@/components/Loading";
+import "../../../admin-transition.css";
 
 export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -25,5 +26,9 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
   if (loading) return <Loading label="Loading project..." />;
   if (!project) return <Loading label="Project not found" />;
 
-  return <ProjectForm project={{ ...project, projectId: project.id }} />;
+  return (
+    <div className="admin-page-enter">
+      <ProjectForm project={{ ...project, projectId: project.id }} />
+    </div>
+  );
 }
