@@ -8,7 +8,7 @@ export interface SessionData {
 
 const sessionOptions = {
   cookieName: "riza-portfolio-session",
-  password: process.env.SESSION_SECRET || "a-very-long-and-secure-secret-key-for-dev-only-change-in-production",
+  password: process.env.SESSION_SECRET || "dev-secret-change-in-prod",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
