@@ -28,10 +28,18 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
   try {
     const body = await req.json();
+    const slug =
+      body.slug ||
+      body.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
     const project = await prisma.project.update({
       where: { id },
       data: {
         title: body.title,
+        slug,
         category: body.category,
         description: body.description,
         coverImage: body.coverImage,

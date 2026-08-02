@@ -11,8 +11,19 @@ const CATEGORIES = [
   "Motion",
 ];
 
+const generateSlug = (text: string): string => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/^-+|-+$/g, "");
+};
+
 interface ProjectFormData {
   title: string;
+  slug: string;
   category: string;
   description: string;
   coverImage: string;
@@ -26,19 +37,23 @@ interface ProjectFormData {
 
 interface ProjectFormProps {
   project?: any;
+  slug?: string;
 }
 
 export default function ProjectForm({ project }: ProjectFormProps) {
   const router = useRouter();
   const [exiting, setExiting] = useState(false);
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
 
   const navigateWithFade = (href: string) => {
     setExiting(true);
     setTimeout(() => router.push(href), 220);
   };
+
   const projectId = project?.projectId || project?.id || null;
   const [form, setForm] = useState<ProjectFormData>({
     title: "",
+    slug: "",
     category: "Graphic Design",
     description: "",
     coverImage: "/placeholder-cover.jpg",
@@ -49,6 +64,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
     published: true,
     images: "",
   });
+
   const [saving, setSaving] = useState(false);
   const [coverPreview, setCoverPreview] = useState<string>("/placeholder-cover.jpg");
   const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
@@ -75,6 +91,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
       }
       setForm({
         title: project.title || "",
+        slug: project.slug || "",
         category: project.category || "Graphic Design",
         description: project.description || "",
         coverImage: cover,
@@ -95,10 +112,25 @@ export default function ProjectForm({ project }: ProjectFormProps) {
         published: project.published !== false,
         images: images.join("\n"),
       });
+      setSlugManuallyEdited(true); // don't auto-generate during edit for existing
       setCoverPreview(cover);
       setGalleryPreviews(images);
     }
   }, [project]);
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    setForm((prev) => ({
+      ...prev,
+      title: newTitle,
+      ...(!slugManuallyEdited ? { slug: generateSlug(newTitle) } : {}),
+    }));
+  };
+
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSlugManuallyEdited(true);
+    setForm({ ...form, slug: e.target.value });
+  };
 
   const uploadFile = async (file: File): Promise<string> => {
     const formData = new FormData();
@@ -227,10 +259,12 @@ export default function ProjectForm({ project }: ProjectFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const slug = form.slug || generateSlug(form.title);
     setSaving(true);
 
     const body = {
       ...form,
+      slug,
       year: form.year ? parseInt(form.year) : null,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
       images: form.images.split("\n").map((t) => t.trim()).filter(Boolean),
@@ -266,37 +300,82 @@ export default function ProjectForm({ project }: ProjectFormProps) {
 
       <div className="max-w-3xl mx-auto px-6 py-8">
         <form onSubmit={handleSubmit} className="bg-canvas rounded-xl border border-border p-8 space-y-6">
-          <div>
-            <label className="block text-sm font-medium mb-1.5">Title *</label>
-            <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors" placeholder="Project title" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium mb-1.5">Title *</label>
+              <input
+                type="text"
+                required
+                value={form.title}
+                onChange={handleTitleChange}
+                className="w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors"
+                placeholder="Project title"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1.5">
+                Slug
+                {!slugManuallyEdited && <span className="text-xs text-ink-light ml-1">(auto-generated)</span>}
+              </label>
+              <input
+                type="text"
+                value={form.slug}
+                onChange={handleSlugChange}
+                className={`w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors ${
+                  !slugManuallyEdited ? "bg-canvas-alt text-ink-light" : ""
+                }`}
+                placeholder="project-slug"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1.5">Category</label>
-              <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl border border-border bg-canvas focus:outline-none focus:border-accent transition-colors">
-                {CATEGORIES.map((c) => (<option key={c} value={c}>{c}</option>))}
+              <select
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-canvas focus:outline-none focus:border-accent transition-colors"
+              >
+                {CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5">Year</label>
-              <input type="number" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors" placeholder="2025" />
+              <input
+                type="number"
+                value={form.year}
+                onChange={(e) => setForm({ ...form, year: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors"
+                placeholder="2025"
+              />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1.5">Client</label>
-            <input type="text" value={form.client} onChange={(e) => setForm({ ...form, client: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors" placeholder="Client name (optional)" />
+            <input
+              type="text"
+              value={form.client}
+              onChange={(e) => setForm({ ...form, client: e.target.value })}
+              className="w-full px-4 py-2.5 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors"
+              placeholder="Client name (optional)"
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1.5">Description</label>
-            <textarea rows={5} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors resize-none" placeholder="Project description..." />
+            <textarea
+              rows={5}
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              className="w-full px-4 py-3 rounded-xl border border-border focus:outline-none focus:border-accent transition-colors resize-none"
+              placeholder="Project description..."
+            />
           </div>
 
           <div>
@@ -306,7 +385,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`relative border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${isDragOver ? "border-accent bg-accent-light/20" : "border-border hover:border-accent/50"}`}
+              className={`relative border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                isDragOver ? "border-accent bg-accent-light/20" : "border-border hover:border-accent/50"
+              }`}
             >
               <input
                 ref={coverInputRef}
@@ -333,7 +414,12 @@ export default function ProjectForm({ project }: ProjectFormProps) {
               ) : (
                 <div className="text-center py-8">
                   <svg className="w-12 h-12 mx-auto mb-3 text-ink-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
                   </svg>
                   <p className="text-sm font-medium mb-1">Drop your cover image here</p>
                   <p className="text-xs text-ink-light">or click to browse</p>
@@ -350,7 +436,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
               onDragOver={handleGalleryDragOver}
               onDragLeave={handleGalleryDragLeave}
               onDrop={handleGalleryDrop}
-              className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${isGalleryDragOver ? "border-accent bg-accent-light/20" : "border-border hover:border-accent/50"}`}
+              className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                isGalleryDragOver ? "border-accent bg-accent-light/20" : "border-border hover:border-accent/50"
+              }`}
             >
               <input
                 ref={galleryInputRef}
@@ -363,7 +451,12 @@ export default function ProjectForm({ project }: ProjectFormProps) {
               {galleryPreviews.length === 0 ? (
                 <div className="text-center py-8">
                   <svg className="w-12 h-12 mx-auto mb-3 text-ink-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
                   </svg>
                   <p className="text-sm font-medium mb-1">Drop gallery images here</p>
                   <p className="text-xs text-ink-light">or click to browse multiple files</p>
@@ -416,7 +509,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
             </label>
           </div>
 
-          <button type="submit" disabled={saving || uploading}
+          <button
+            type="submit"
+            disabled={saving || uploading}
             className={`w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent/90 disabled:opacity-70 transition-all ${saving || uploading ? "btn-saving" : ""}`}
           >
             {saving ? "Saving..." : uploading ? "Uploading..." : projectId ? "Update Project" : "Create Project"}
