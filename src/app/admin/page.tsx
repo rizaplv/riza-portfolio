@@ -70,6 +70,15 @@ export default function AdminPage() {
             </button>
             <Link href="/progress" className="text-xs px-3 py-1.5 border border-border rounded-lg hover:bg-surface transition-colors">Check Progress</Link>
             <Link href="/" target="_blank" className="text-sm text-ink-light hover:text-ink transition-colors">View Site ↗</Link>
+            <button
+              onClick={async () => {
+                await fetch("/api/auth/logout", { method: "POST" });
+                router.push("/admin/login");
+              }}
+              className="text-xs px-3 py-1.5 border border-border rounded-lg hover:bg-surface transition-colors"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </header>
