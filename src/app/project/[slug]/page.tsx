@@ -3,8 +3,44 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  let project: any = null;
+  try {
+    project = await prisma.project.findUnique({ where: { slug } });
+  } catch {}
+  if (!project) return {};
+
+  const description = project.description.substring(0, 160);
+  const ogImage = project.coverImage || "https://rizaplv.vercel.app/og-image.png";
+
+  return {
+    title: `${project.title} — Muhammad Riza Pahlevie`,
+    description,
+    openGraph: {
+      title: `${project.title} — Muhammad Riza Pahlevie`,
+      description,
+      type: "article",
+      url: `https://rizaplv.vercel.app/project/${project.slug}`,
+      images: [{ url: ogImage, alt: project.title }],
+      publishedTime: project.createdAt,
+      modifiedTime: project.updatedAt,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — Muhammad Riza Pahlevie`,
+      description,
+      images: [ogImage],
+    },
+    alternates: {
+      canonical: `https://rizaplv.vercel.app/project/${project.slug}`,
+    },
+  };
+}
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -19,8 +55,27 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const tags: string[] = JSON.parse(project.tags || "[]");
   const images: string[] = JSON.parse(project.images || "[]");
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: project.title,
+    description: project.description.substring(0, 160),
+    image: project.coverImage,
+    author: { "@type": "Person", name: "Muhammad Riza Pahlevie" },
+    publisher: { "@type": "Organization", name: "Riza Portfolio" },
+    datePublished: project.createdAt,
+    dateModified: project.updatedAt,
+    about: {
+      "@type": "CreativeWork",
+      name: project.title,
+      category: project.category,
+    },
+  };
+
   return (
     <article className="max-w-4xl mx-auto px-6 py-16 page-enter">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
       <Link href="/#work" className="inline-flex items-center gap-2 text-sm text-ink-light hover:text-ink transition-colors mb-10">
         ← Back to Work
       </Link>

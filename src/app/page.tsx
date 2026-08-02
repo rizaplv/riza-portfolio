@@ -36,6 +36,38 @@ export default async function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Muhammad Riza Pahlevie",
+            url: "https://rizaplv.vercel.app",
+            sameAs: [
+              "https://behance.net/rizaplv",
+              "https://linkedin.com/in/rizaplv",
+              "https://dribbble.com/rizaplv",
+            ],
+            jobTitle: "Graphic Designer & 3D Generalist",
+            worksFor: { "@type": "Organization", name: "Artha Kencana Cendekia" },
+          }),
+        }}
+      />
+      {/* WebSite schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Muhammad Riza Pahlevie — Portfolio",
+            url: "https://rizaplv.vercel.app",
+            description: "Portfolio of Muhammad Riza Pahlevie — Graphic Designer, UI Designer & 3D Generalist.",
+          }),
+        }}
+      />
+
       <section className="min-h-[90vh] flex items-center px-6 page-enter">
         <div className="max-w-7xl mx-auto w-full py-20">
           <div className="max-w-3xl">
