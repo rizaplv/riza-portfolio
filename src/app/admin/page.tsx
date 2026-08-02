@@ -63,6 +63,7 @@ export default function AdminPage() {
             <button onClick={() => navigateWithFade("/admin/projects/new")} className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors">
               + New Project
             </button>
+            <Link href="/progress" className="text-xs px-3 py-1.5 border border-border rounded-lg hover:bg-surface transition-colors">Check Progress</Link>
             <Link href="/" target="_blank" className="text-sm text-ink-light hover:text-ink transition-colors">View Site ↗</Link>
           </div>
         </div>
