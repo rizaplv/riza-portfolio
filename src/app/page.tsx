@@ -49,7 +49,7 @@ export default async function HomePage() {
               "https://linkedin.com/in/rizaplv",
               "https://dribbble.com/rizaplv",
             ],
-            jobTitle: "Graphic Designer & 3D Generalist",
+            jobTitle: "Graphic, Motion, UI Designer & 3D Generalist",
             worksFor: { "@type": "Organization", name: "Artha Kencana Cendekia" },
           }),
         }}
@@ -63,7 +63,7 @@ export default async function HomePage() {
             "@type": "WebSite",
             name: "Muhammad Riza Pahlevie — Portfolio",
             url: "https://rizaplv.vercel.app",
-            description: "Portfolio of Muhammad Riza Pahlevie — Graphic Designer, UI Designer & 3D Generalist.",
+            description: "Portfolio of Muhammad Riza Pahlevie — Graphic, Motion, UI Designer & 3D Generalist.",
           }),
         }}
       />
@@ -78,7 +78,7 @@ export default async function HomePage() {
               Muhammad Riza Pahlevie
             </h1>
             <p className="text-xl text-ink-light mb-3">
-              Graphic Designer, UI Designer & 3D Generalist
+              Graphic, Motion, UI Designer & 3D Generalist
             </p>
             <p className="text-ink-light mb-10 max-w-md leading-relaxed">
               Visual designer crafting graphics, interfaces, 3D, and motion that bring ideas to life.

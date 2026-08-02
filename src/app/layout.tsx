@@ -9,7 +9,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-displa
 
 export const metadata: Metadata = {
   title: "Muhammad Riza Pahlevie — Portfolio",
-  description: "Portfolio of Muhammad Riza Pahlevie — Graphic Designer, UI Designer & 3D Generalist based in Tangerang Selatan, Indonesia.",
+  description: "Portfolio of Muhammad Riza Pahlevie — Graphic, Motion, UI Designer & 3D Generalist based in Tangerang Selatan, Indonesia.",
   keywords: [
     "Riza Pahlevie",
     "Graphic Designer",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://rizaplv.vercel.app",
     title: "Muhammad Riza Pahlevie — Portfolio",
-    description: "Portfolio of Muhammad Riza Pahlevie — Graphic Designer, UI Designer & 3D Generalist based in Tangerang Selatan, Indonesia.",
+    description: "Portfolio of Muhammad Riza Pahlevie — Graphic, Motion, UI Designer & 3D Generalist based in Tangerang Selatan, Indonesia.",
     siteName: "Riza Portfolio",
     emails: ["rizaplv@gmail.com"],
     images: [
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Muhammad Riza Pahlevie — Portfolio",
-    description: "Portfolio of Muhammad Riza Pahlevie — Graphic Designer, UI Designer & 3D Generalist based in Tangerang Selatan, Indonesia.",
+    description: "Portfolio of Muhammad Riza Pahlevie — Graphic, Motion, UI Designer & 3D Generalist based in Tangerang Selatan, Indonesia.",
     creator: "@rizaplv",
     images: ["/og-image.png"],
   },
