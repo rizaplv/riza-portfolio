@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProjectForm from "@/components/ProjectForm";
+import Loading from "@/components/Loading";
 
 export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -21,8 +22,8 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
     });
   }, [params, router]);
 
-  if (loading) return <div className="min-h-screen bg-canvas-alt flex items-center justify-center"><p className="text-ink-light">Loading...</p></div>;
-  if (!project) return <div className="min-h-screen bg-canvas-alt flex items-center justify-center"><p className="text-ink-light">Project not found</p></div>;
+  if (loading) return <Loading label="Loading project..." />;
+  if (!project) return <Loading label="Project not found" />;
 
   return <ProjectForm project={{ ...project, projectId: project.id }} />;
 }

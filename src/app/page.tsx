@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import ProjectGrid from "@/components/ProjectGrid";
 import ContactForm from "@/components/ContactForm";
+import Reveal from "@/components/Reveal";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +29,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="min-h-[90vh] flex items-center px-6">
+      <Reveal as="section" className="min-h-[90vh] flex items-center px-6" delay={0}>
         <div className="max-w-7xl mx-auto w-full py-20">
           <div className="max-w-3xl">
             <p className="text-sm font-medium text-accent tracking-widest uppercase mb-4">
@@ -53,13 +54,13 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </Reveal>
 
       <section className="px-6 sm:px-16 py-section max-w-7xl mx-auto">
-        <div className="mb-12">
+        <Reveal delay={0} className="mb-12">
           <p className="text-sm font-medium text-accent tracking-widest uppercase mb-2">Portfolio</p>
           <h2 className="text-4xl font-bold">Selected Work</h2>
-        </div>
+        </Reveal>
         {projects.length > 0 ? (
           <ProjectGrid projects={parsedProjects} />
         ) : (
@@ -73,7 +74,7 @@ export default async function HomePage() {
       <section id="about" className="px-16 py-section bg-canvas-alt">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div>
+            <Reveal delay={0}>
               <p className="text-sm font-medium text-accent tracking-widest uppercase mb-3">About</p>
               <h2 className="text-4xl font-bold mb-6">The person behind the pixels</h2>
               <div className="space-y-4 text-ink-light leading-relaxed">
@@ -133,22 +134,22 @@ export default async function HomePage() {
                   <a href="mailto:rizaplv@gmail.com" className="text-accent hover:underline">rizaplv@gmail.com</a>
                 </div>
               </div>
-            </div>
-            <div className="bg-surface rounded-2xl aspect-[3/4] flex items-center justify-center">
+            </Reveal>
+            <Reveal delay={1} className="bg-surface rounded-2xl aspect-[3/4] flex items-center justify-center">
               <div className="text-center">
                 <div className="w-32 h-32 mx-auto rounded-full bg-accent-light flex items-center justify-center mb-4">
                   <span className="text-4xl font-bold text-accent">RP</span>
                 </div>
                 <p className="text-ink-light text-sm">Profile Photo</p>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="px-16 max-w-7xl mx-auto w-full">
+      <Reveal as="section" className="px-16 max-w-7xl mx-auto w-full" delay={0}>
         <ContactForm />
-      </section>
+      </Reveal>
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 interface Project {
   id: string;
@@ -56,7 +57,7 @@ export default function AdminPage() {
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         {loading ? (
-          <p className="text-ink-light">Loading...</p>
+          <Loading label="Loading projects..." />
         ) : (
           <div className="bg-canvas rounded-xl border border-border overflow-hidden">
             <table className="w-full">

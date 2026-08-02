@@ -56,13 +56,33 @@ export default function ProjectForm({ project }: ProjectFormProps) {
   useEffect(() => {
     if (project) {
       const cover = project.coverImage || "/placeholder-cover.jpg";
-      const images = Array.isArray(project.images) ? project.images : [];
+      let images: string[] = [];
+      if (Array.isArray(project.images)) {
+        images = project.images;
+      } else if (typeof project.images === "string") {
+        try {
+          const parsed = JSON.parse(project.images);
+          images = Array.isArray(parsed) ? parsed : [];
+        } catch {
+          images = [];
+        }
+      }
       setForm({
         title: project.title || "",
         category: project.category || "Graphic Design",
         description: project.description || "",
         coverImage: cover,
-        tags: Array.isArray(project.tags) ? project.tags.join(", ") : "",
+        tags: Array.isArray(project.tags)
+          ? project.tags.join(", ")
+          : typeof project.tags === "string"
+          ? (() => {
+              try {
+                return JSON.parse(project.tags).join(", ");
+              } catch {
+                return "";
+              }
+            })()
+          : "",
         client: project.client || "",
         year: project.year?.toString() || "",
         featured: project.featured || false,
@@ -356,7 +376,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
                         onDragEnd={() => setGalleryDragOverIndex(null)}
                         className={`relative group cursor-move ${galleryDragOverIndex === index ? "ring-2 ring-accent" : ""}`}
                       >
-                        <img src={img} alt={`Gallery ${index + 1}`} className="w-full h-32 object-cover rounded-lg" />
+                        <img src={img} alt={`Gallery ${index + 1}`} className="w-full h-32 object-contain bg-surface rounded-lg" />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 rounded-lg transition-colors" />
                         <button
                           type="button"
@@ -392,8 +412,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           </div>
 
           <button type="submit" disabled={saving || uploading}
-            className="w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent/90 disabled:opacity-50 transition-all">
-            {saving ? "Saving..." : projectId ? "Update Project" : "Create Project"}
+            className={`w-full py-3 bg-accent text-white rounded-xl font-medium hover:bg-accent/90 disabled:opacity-70 transition-all ${saving || uploading ? "btn-saving" : ""}`}
+          >
+            {saving ? "Saving..." : uploading ? "Uploading..." : projectId ? "Update Project" : "Create Project"}
           </button>
         </form>
       </div>

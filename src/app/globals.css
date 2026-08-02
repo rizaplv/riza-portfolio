@@ -32,3 +32,73 @@ body {
 
 html { scroll-behavior: smooth; }
 ::selection { background: var(--color-accent); color: white; }
+
+/* ── Fade-in reveal animation ────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — set --i inline (0,1,2,...) for delay */
+.reveal[style*="--i"] {
+  transition-delay: calc(var(--i) * 90ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Spinner (smooth triple-ring) ────────────────────────── */
+.spinner {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+.spinner span {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--color-accent);
+  border-top-color: transparent;
+  animation: spin 0.9s linear infinite;
+}
+.spinner span:nth-child(2) { inset: 5px; opacity: 0.6; animation-direction: reverse; }
+.spinner span:nth-child(3) { inset: 10px; opacity: 0.3; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Save button pulse ───────────────────────────────────── */
+.btn-saving {
+  position: relative;
+  pointer-events: none;
+}
+.btn-saving::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.1s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+/* ── Route fade (page transitions) ───────────────────────── */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: pageIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
