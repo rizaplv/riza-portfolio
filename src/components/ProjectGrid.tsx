@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type Project = {
   id: string;
@@ -43,9 +44,9 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           <Link
             key={project.id}
             href={`/project/${project.slug}`}
-            className="group block rounded-2xl overflow-hidden bg-canvas-alt border border-border hover:shadow-lg transition-all duration-300"
+            className="group relative block rounded-2xl overflow-hidden bg-black shadow-2xl shadow-black/30"
           >
-            <div className="relative w-full bg-surface overflow-hidden rounded-t-2xl aspect-[16/9]">
+            <div className="relative w-full aspect-[4/3]">
               <Image
                 src={project.coverImage}
                 alt={project.title}
@@ -54,25 +55,16 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                 unoptimized={project.coverImage?.includes("supabase.co") || false}
               />
-            </div>
-            <div className="p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-medium px-2 py-0.5 bg-accent-light text-accent rounded-full">
+              {/* Bottom overlay: gradient + title */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                <span className="text-xs font-medium px-2.5 py-0.5 bg-accent-light text-accent rounded-full inline-block mb-2">
                   {project.category}
                 </span>
-                {project.year && (
-                  <span className="text-xs text-ink-light">{project.year}</span>
-                )}
-              </div>
-              <h3 className="text-lg font-semibold text-ink group-hover:text-accent transition-colors mb-2">
-                {project.title}
-              </h3>
-              <div className="flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="text-xs text-ink-light">
-                    #{tag}
-                  </span>
-                ))}
+                <h3 className="text-lg font-semibold mb-1">{project.title}</h3>
+                <p className="text-sm text-ink-light/80 max-w-[calc(100% - 1rem)] truncate">
+                  {project.tags.map((tag) => `#${tag}`).join(" · ")}
+                </p>
               </div>
             </div>
           </Link>
