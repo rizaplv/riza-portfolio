@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import GalleryBox from "@/components/GalleryBox";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -116,21 +117,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {images.length > 0 && (
         <Reveal delay={0} className="mb-16">
           <h2 className="text-2xl font-bold mb-6">Gallery</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {images.map((img: string, i: number) => (
-              <Reveal key={i} delay={i % 2} className="rounded-xl overflow-hidden bg-surface border border-border">
-                <Image
-                  src={img}
-                  alt={`Gallery ${i + 1}`}
-                  width={600}
-                  height={450}
-                  className="w-full h-auto object-contain"
-                  loading="lazy"
-                  unoptimized={img?.includes("supabase.co") || false}
-                />
-              </Reveal>
-            ))}
-          </div>
+          <GalleryBox images={images} title={project.title} />
         </Reveal>
       )}
     </article>
