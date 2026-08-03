@@ -56,7 +56,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 unoptimized={project.coverImage?.includes("supabase.co") || false}
               />
               {/* Bottom overlay: gradient + title */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                 <span className="text-xs font-medium px-2.5 py-0.5 bg-accent-light text-accent rounded-full inline-block mb-2">
                   {project.category}
