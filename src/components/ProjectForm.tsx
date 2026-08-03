@@ -133,15 +133,34 @@ export default function ProjectForm({ project }: ProjectFormProps) {
   };
 
   const uploadFile = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
+    // Step 1: Check file size (25MB max)
+    if (file.size > 25 * 1024 * 1024) {
+      throw new Error("File too large (max 25MB)");
+    }
+
+    // Step 2: Get signed upload URL from our API (small request, no body limit)
+    const ext = file.name.split(".").pop() || "jpg";
+    const urlRes = await fetch(`/api/upload-url?ext=${encodeURIComponent(ext)}`);
+    if (!urlRes.ok) throw new Error("Failed to get upload URL");
+    const { signedUrl, publicUrl } = await urlRes.json();
+
+    // Step 3: Upload file directly to Supabase (bypasses Vercel 4.5MB body limit)
+    const uploadRes = await fetch(signedUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": file.type || "application/octet-stream",
+        "x-upsert": "true",
+      },
+      body: file,
     });
-    if (!res.ok) throw new Error("Upload failed");
-    const data = await res.json();
-    return data.url;
+
+    if (!uploadRes.ok) {
+      const errText = await uploadRes.text();
+      console.error("Direct upload failed:", uploadRes.status, errText);
+      throw new Error("Upload to storage failed");
+    }
+
+    return publicUrl;
   };
 
   const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
