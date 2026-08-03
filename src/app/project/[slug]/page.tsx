@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 import GalleryBox from "@/components/GalleryBox";
 import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // ISR 60s — enables client hydration + static page
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
