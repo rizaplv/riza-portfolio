@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import React from "react";
-import { ReactEmail } from "@/lib/email-template";
+import { render } from "@react-email/render";
+import ReactEmail from "@/lib/email-template";
 
 interface ContactBody {
   name: string;
@@ -33,6 +33,17 @@ export async function POST(req: NextRequest) {
     const { Resend } = await import("resend");
     const resend = new Resend(process.env.RESEND_API_KEY);
 
+    const html = render(
+      ReactEmail({
+        name: body.name,
+        email: body.email,
+        subject,
+        message: body.message,
+        company,
+        source,
+      })
+    );
+
     const { data, error } = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to: ["rizaplv@gmail.com"],
@@ -40,14 +51,7 @@ export async function POST(req: NextRequest) {
         ? `[${source || "Portfolio"}] ${subject} — ${company}`
         : `[${source || "Portfolio"}] ${subject}`,
       replyTo: body.email,
-      react: React.createElement(ReactEmail, {
-        name: body.name,
-        email: body.email,
-        subject,
-        message: body.message,
-        company,
-        source,
-      }),
+      html,
     });
 
     if (error) {
