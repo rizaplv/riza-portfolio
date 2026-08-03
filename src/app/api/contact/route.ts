@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { render } from "@react-email/render";
-import ReactEmail from "@/lib/email-template";
+import React from "react";
+import { ReactEmail } from "@/lib/email-template";
 
 interface ContactBody {
   name: string;
@@ -29,19 +29,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, id: "mock" });
     }
 
-    // Lazy-load Resend only when env is set
+    // Lazy-load deps only when env is set — avoids build crash in envs without RESEND_API_KEY
     const { Resend } = await import("resend");
+    const { render } = await import("@react-email/render");
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const html = render(
-      ReactEmail({
+    const html = await render(
+      React.createElement(ReactEmail, {
         name: body.name,
         email: body.email,
         subject,
         message: body.message,
         company,
         source,
-      })
+      }) as any
     );
 
     const { data, error } = await resend.emails.send({
