@@ -3,6 +3,7 @@ import ProjectGrid from "@/components/ProjectGrid";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import AnimatedStatement from "@/components/AnimatedStatement";
+import HeroVisual from "@/components/HeroVisual";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -70,27 +71,30 @@ export default async function HomePage() {
 
       <section className="min-h-[90vh] flex items-center px-6 page-enter">
         <div className="max-w-7xl mx-auto w-full py-20">
-          <div className="max-w-3xl">
-            <p className="text-sm font-medium text-accent tracking-widest uppercase mb-4">
-              Available for Freelance & Fulltime
-            </p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6">
-              Muhammad Riza Pahlevie
-            </h1>
-            <p className="text-xl text-ink-light mb-3">
-              Graphic, Motion, UI Designer & 3D Generalist
-            </p>
-            <p className="text-ink-light mb-10 max-w-md leading-relaxed">
-              Visual designer crafting graphics, interfaces, 3D, and motion that bring ideas to life.
-            </p>
-            <div className="flex items-center gap-4">
-              <Link href="#work" className="inline-flex px-8 py-3 bg-accent text-white rounded-full font-medium hover:bg-accent/90 transition-colors">
-                View My Work
-              </Link>
-              <Link href="#contact" className="inline-flex px-8 py-3 border border-border text-ink rounded-full font-medium hover:bg-surface transition-colors">
-                Get In Touch
-              </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <p className="text-sm font-medium text-accent tracking-widest uppercase mb-4">
+                Available for Freelance &amp; Fulltime
+              </p>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6">
+                Muhammad Riza Pahlevie
+              </h1>
+              <p className="text-xl text-ink-light mb-3">
+                Graphic, Motion, UI Designer &amp; 3D Generalist
+              </p>
+              <p className="text-ink-light mb-10 max-w-md leading-relaxed">
+                Visual designer crafting graphics, interfaces, 3D, and motion that bring ideas to life.
+              </p>
+              <div className="flex items-center gap-4">
+                <Link href="#work" className="inline-flex px-8 py-3 bg-accent text-white rounded-full font-medium hover:bg-accent/90 transition-colors">
+                  View My Work
+                </Link>
+                <Link href="#contact" className="inline-flex px-8 py-3 border border-border text-ink rounded-full font-medium hover:bg-surface transition-colors">
+                  Get In Touch
+                </Link>
+              </div>
             </div>
+            <HeroVisual />
           </div>
         </div>
       </section>
