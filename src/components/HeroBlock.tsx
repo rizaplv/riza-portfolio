@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, MotionConfig } from "framer-motion";
 
 const SOCIALS = [
@@ -46,24 +45,6 @@ export default function HeroBlock() {
               <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
               Available for Freelance &amp; Fulltime
             </motion.p>
-
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="mb-8 inline-block"
-            >
-              <div className="mx-auto h-32 w-32 overflow-hidden rounded-full bg-dark shadow-xl ring-4 ring-accent-light md:h-40 md:w-40">
-                <Image
-                  src="/hero-character.png"
-                  alt="3D illustration of Muhammad Riza Pahlevie"
-                  width={160}
-                  height={160}
-                  priority
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
