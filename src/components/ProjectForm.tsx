@@ -7,7 +7,7 @@ import RichTextEditor from "@/components/RichTextEditor";
 const CATEGORIES = [
   "Graphic Design",
   "UI Design",
-  "3D Stage Design",
+  "3D Design",
   "Event Production",
   "Motion",
 ];
