@@ -131,22 +131,6 @@ export default function HeroBlock() {
         </div>
       </MotionConfig>
 
-      {/* Scroll indicator */}
-      <motion.a
-        href="#work"
-        aria-label="Scroll to my work"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{
-          opacity: { delay: 1, duration: 0.6 },
-          y: { delay: 1.2, duration: 1.5, repeat: Infinity },
-        }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-ink-light"
-      >
-        <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 5v14m0 0 6-6m-6 6-6-6" />
-        </svg>
-      </motion.a>
     </section>
   );
 }

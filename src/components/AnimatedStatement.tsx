@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Reveal from "@/components/Reveal";
 
 const TOOLS = [
@@ -34,11 +35,14 @@ export default function AnimatedStatement() {
               <div
                 key={tool.name}
                 aria-label={tool.name}
-                className="group absolute"
-                style={{
-                  left: `calc(50% + ${POSITIONS[i].x}px)`,
-                  top: `calc(50% + ${POSITIONS[i].y}px)`,
-                }}
+                className="tool-icon group absolute left-1/2 top-1/2"
+                style={
+                  {
+                    "--i": i,
+                    "--tx": `${POSITIONS[i].x}px`,
+                    "--ty": `${POSITIONS[i].y}px`,
+                  } as CSSProperties
+                }
               >
                 <div
                   className="tool-float flex h-24 w-24 items-center justify-center rounded-2xl bg-white shadow-[0_10px_30px_rgba(2,6,23,0.10)] ring-1 ring-black/5"

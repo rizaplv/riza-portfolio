@@ -76,6 +76,28 @@ tr.reveal {
   .tool-float { animation: none !important; }
 }
 
+/* ── Tool icons: reveal from center, spread to orbit (AnimatedStatement) ── */
+.tool-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.8s ease;
+  transition-delay: calc(var(--i) * 70ms);
+  will-change: transform, opacity;
+}
+.reveal.is-visible .tool-icon {
+  opacity: 1;
+  transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-icon {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty)));
+    transition: none;
+  }
+}
+
 /* ── Rich text (description editor + project page) ───────── */
 .rich-text { line-height: 1.7; word-break: break-word; }
 .rich-text p { margin: 0 0 1rem; }

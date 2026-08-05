@@ -75,10 +75,20 @@ export default async function HomePage() {
       <AnimatedStatement />
 
       <section id="work" className="px-6 sm:px-16 py-section max-w-7xl mx-auto">
-        <Reveal delay={0} className="mb-12">
-          <p className="text-sm font-medium text-accent tracking-widest uppercase mb-2">Portfolio</p>
-          <h2 className="text-4xl font-bold">Selected Work</h2>
-        </Reveal>
+        <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+          <Reveal delay={0}>
+            <p className="text-sm font-medium text-accent tracking-widest uppercase mb-2">Portfolio</p>
+            <h2 className="text-4xl font-bold">Selected Work</h2>
+          </Reveal>
+          <Reveal delay={1} className="shrink-0">
+            <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:underline">
+              View All Projects
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14m0 0-6-6m6 6-6 6" />
+              </svg>
+            </Link>
+          </Reveal>
+        </div>
         {projects.length > 0 ? (
           <ProjectGrid projects={parsedProjects.filter((p) => p.featured)} />
         ) : (
@@ -87,14 +97,6 @@ export default async function HomePage() {
             <p>Run the seed script to populate initial data.</p>
           </div>
         )}
-        <div className="mt-12 text-center">
-          <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:underline">
-            View All Projects
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M5 12h14m0 0-6-6m6 6-6 6" />
-            </svg>
-          </Link>
-        </div>
       </section>
 
       <section id="about" className="px-16 py-section bg-canvas-alt page-enter">
