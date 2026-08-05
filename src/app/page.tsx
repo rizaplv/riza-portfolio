@@ -21,15 +21,15 @@ const EXPERIENCE = [
 
 const ABOUT_HIGHLIGHTS = [
   {
-    label: "5+ Years of Experience",
+    label: "7+ Years of Experience",
     paths: ["M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", "M2 7h20v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z"],
   },
   {
-    label: "Based in Indonesia",
+    label: "Based in South Tangerang, Indonesia",
     paths: ["M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z", "M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"],
   },
   {
-    label: "Open to freelance & collaborations",
+    label: "Open to freelance & fulltime",
     paths: ["m22 2-7 20-4-9-9-4Z", "M22 2 11 13"],
   },
 ];
@@ -123,12 +123,14 @@ export default async function HomePage() {
                 <div>
                   <p className="mb-3 text-sm font-medium uppercase tracking-widest text-ink-light">About Me</p>
                   <h2 className="mb-4 text-3xl font-bold leading-tight text-ink sm:text-4xl">
-                    Design is how I solve problems and create impact.
+                    Full-Stack Visual Designer
                   </h2>
                   <p className="max-w-md leading-relaxed text-ink-light">
-                    I&apos;m a multidisciplinary designer who loves crafting meaningful and functional digital
-                    experiences. With a keen eye for detail and a passion for design, I help brands and products
-                    connect with their audience.
+                    Full-Stack Visual Designer with 7+ years of experience spanning live-event production, product UI,
+                    and 3D visualization. I develop stage concepts from creative briefs through to live execution,
+                    design interfaces that measurably improve user performance, and build 3D visuals that anchor real
+                    productions. Hands-on with VJ content and AV operations, I deliver work that performs live, pairing
+                    design craft with technical reliability.
                   </p>
                 </div>
                 <a
@@ -148,7 +150,7 @@ export default async function HomePage() {
             </Reveal>
 
             <Reveal delay={1} className="lg:col-span-2">
-              <ul className="flex h-full flex-col justify-between gap-8">
+              <ul className="flex h-full flex-col gap-8">
                 {ABOUT_HIGHLIGHTS.map((h) => (
                   <li key={h.label} className="flex items-center gap-4">
                     <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-ink" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
