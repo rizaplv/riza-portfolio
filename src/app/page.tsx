@@ -19,6 +19,21 @@ const EXPERIENCE = [
   { title: "Graphic Designer & Multimedia Crew", company: "INFINITE Live", period: "Aug 2017 – Oct 2019" },
 ];
 
+const ABOUT_HIGHLIGHTS = [
+  {
+    label: "5+ Years of Experience",
+    paths: ["M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", "M2 7h20v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z"],
+  },
+  {
+    label: "Based in Indonesia",
+    paths: ["M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z", "M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"],
+  },
+  {
+    label: "Open to freelance & collaborations",
+    paths: ["m22 2-7 20-4-9-9-4Z", "M22 2 11 13"],
+  },
+];
+
 export default async function HomePage() {
   let projects: any[] = [];
 
@@ -99,21 +114,58 @@ export default async function HomePage() {
         )}
       </section>
 
-      <section id="about" className="px-16 py-section bg-canvas-alt page-enter">
+      <section id="about" className="px-6 sm:px-16 py-section bg-canvas-alt page-enter">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            {/* Left column: bio + experience */}
-            <div className="space-y-10">
-              <Reveal delay={0}>
-                <p className="text-sm font-medium text-accent tracking-widest uppercase mb-3">About</p>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-                  Multimedia designer & 3D Generalist
-                </h2>
-                <p className="text-ink-light max-w-md leading-relaxed">
-                  Visual designer crafting graphics, interfaces, 3D, and motion that bring ideas to life.
-                </p>
-              </Reveal>
+          {/* About card */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 rounded-[24px] bg-white p-8 sm:p-12 shadow-[0_10px_40px_rgba(2,6,23,0.08)] ring-1 ring-black/5">
+            <Reveal delay={0} className="lg:col-span-3">
+              <div className="flex h-full flex-col items-start justify-between gap-10">
+                <div>
+                  <p className="mb-3 text-sm font-medium uppercase tracking-widest text-ink-light">About Me</p>
+                  <h2 className="mb-4 text-3xl font-bold leading-tight text-ink sm:text-4xl">
+                    Design is how I solve problems and create impact.
+                  </h2>
+                  <p className="max-w-md leading-relaxed text-ink-light">
+                    I&apos;m a multidisciplinary designer who loves crafting meaningful and functional digital
+                    experiences. With a keen eye for detail and a passion for design, I help brands and products
+                    connect with their audience.
+                  </p>
+                </div>
+                <a
+                  href="/CV-Riza.pdf"
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink px-8 py-3 font-medium text-white transition-colors hover:bg-ink/90"
+                >
+                  Download CV
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <path d="m7 10 5 5 5-5" />
+                    <path d="M12 15V3" />
+                  </svg>
+                </a>
+              </div>
+            </Reveal>
 
+            <Reveal delay={1} className="lg:col-span-2">
+              <ul className="flex h-full flex-col justify-between gap-8">
+                {ABOUT_HIGHLIGHTS.map((h) => (
+                  <li key={h.label} className="flex items-center gap-4">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-ink" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      {h.paths.map((p) => (
+                        <path key={p} d={p} />
+                      ))}
+                    </svg>
+                    <span className="font-medium text-ink">{h.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+
+          {/* Detail: experience, skills, tools, education, connect */}
+          <div className="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-2">
+            <div className="space-y-10">
               <Reveal delay={1}>
                 <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Work Experience</h3>
                 <div className="space-y-3">
@@ -128,7 +180,6 @@ export default async function HomePage() {
               </Reveal>
             </div>
 
-            {/* Right column: skills + tools + connect */}
             <div className="space-y-10">
               <Reveal delay={3}>
                 <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Core Skills</h3>
@@ -156,11 +207,11 @@ export default async function HomePage() {
                 <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Education</h3>
                 <div className="space-y-2">
                   <div>
-                    <p className="font-medium text-ink">Bachelor's Degree, Design and Visual Communications</p>
+                    <p className="font-medium text-ink">Bachelor&apos;s Degree, Design and Visual Communications</p>
                     <p className="text-sm text-ink-light">Universitas Mercu Buana — 2023</p>
                   </div>
                   <div>
-                    <p className="font-medium text-ink">UI/UX Research & Design Certification</p>
+                    <p className="font-medium text-ink">UI/UX Research &amp; Design Certification</p>
                     <p className="text-sm text-ink-light">Binar Academy — Dec 2023</p>
                   </div>
                 </div>
