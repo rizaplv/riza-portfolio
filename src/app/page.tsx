@@ -139,7 +139,7 @@ export default async function HomePage() {
             </Reveal>
 
             <Reveal delay={1} className="lg:col-span-2">
-              <ul className="flex h-full flex-col gap-8">
+              <ul className="flex h-full flex-col justify-center gap-8">
                 {ABOUT_HIGHLIGHTS.map((h) => (
                   <li key={h.label} className="flex items-center gap-4">
                     <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-ink" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
