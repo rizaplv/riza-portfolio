@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-ink: #191919;
   --color-ink-light: #696969;
@@ -21,6 +23,22 @@
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   --spacing-section: 6rem;
 }
+
+/* ── Dark mode: override semantic tokens on .dark ────────── */
+.dark {
+  --color-ink: #F1F1F3;
+  --color-ink-light: #A6A6B0;
+  --color-canvas: #0E0E11;
+  --color-canvas-alt: #151519;
+  --color-surface: #1E1E23;
+  --color-accent: #5B9BFF;
+  --color-accent-light: #16233F;
+  --color-gold: #D4B87E;
+  --color-gold-light: #2B2416;
+  --color-border: #2A2A31;
+}
+
+html.dark { color-scheme: dark; }
 
 body {
   font-family: var(--font-body);

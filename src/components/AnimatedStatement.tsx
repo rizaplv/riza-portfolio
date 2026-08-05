@@ -45,7 +45,7 @@ export default function AnimatedStatement() {
                 }
               >
                 <div
-                  className="tool-float flex h-24 w-24 items-center justify-center rounded-2xl bg-white shadow-[0_10px_30px_rgba(2,6,23,0.10)] ring-1 ring-black/5"
+                  className="tool-float flex h-24 w-24 items-center justify-center rounded-2xl bg-white dark:bg-surface shadow-[0_10px_30px_rgba(2,6,23,0.10)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] ring-1 ring-black/5 dark:ring-white/10"
                   style={{ animationDelay: `${i * 0.4}s` }}
                 >
                   <img

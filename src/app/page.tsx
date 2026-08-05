@@ -106,7 +106,7 @@ export default async function HomePage() {
       <section id="about" className="px-6 sm:px-16 py-section bg-canvas-alt page-enter">
         <div className="max-w-7xl mx-auto">
           {/* About card */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 rounded-[24px] bg-white p-8 sm:p-12 shadow-[0_10px_40px_rgba(2,6,23,0.08)] ring-1 ring-black/5">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 rounded-[24px] bg-white dark:bg-surface p-8 sm:p-12 shadow-[0_10px_40px_rgba(2,6,23,0.08)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)] ring-1 ring-black/5 dark:ring-white/10">
             <Reveal delay={0} className="lg:col-span-3">
               <div className="flex h-full flex-col items-start justify-between gap-10">
                 <div>
@@ -126,7 +126,7 @@ export default async function HomePage() {
                   href="/CV-Riza.pdf"
                   target="_blank"
                   rel="noopener"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink px-8 py-3 font-medium text-white transition-colors hover:bg-ink/90"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink px-8 py-3 font-medium text-canvas transition-colors hover:bg-ink/90"
                 >
                   Download CV
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

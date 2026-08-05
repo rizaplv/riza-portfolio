@@ -13,7 +13,7 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer className="bg-dark text-white">
+    <footer className="bg-dark text-white border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
         <p className="text-sm text-white/60">
           © {new Date().getFullYear()} Muhammad Riza Pahlevie. All rights reserved.

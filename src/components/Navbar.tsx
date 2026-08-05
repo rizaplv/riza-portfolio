@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Navbar() {
   return (
@@ -7,10 +8,13 @@ export default function Navbar() {
         <Link href="/" className="text-xl font-bold tracking-tight text-ink">
           Riza<span className="text-accent">.</span>
         </Link>
-        <div className="flex items-center gap-8">
-          <Link href="/#work" className="text-sm text-ink-light hover:text-ink transition-colors">Work</Link>
-          <Link href="/#about" className="text-sm text-ink-light hover:text-ink transition-colors">About</Link>
-          <Link href="/#contact" className="text-sm px-4 py-2 bg-ink text-white rounded-full hover:bg-ink/90 transition-colors">Contact</Link>
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-8">
+            <Link href="/#work" className="text-sm text-ink-light hover:text-ink transition-colors">Work</Link>
+            <Link href="/#about" className="text-sm text-ink-light hover:text-ink transition-colors">About</Link>
+            <Link href="/#contact" className="text-sm px-4 py-2 bg-ink text-canvas rounded-full hover:bg-ink/90 transition-colors">Contact</Link>
+          </div>
+          <ThemeToggle />
         </div>
       </nav>
     </header>

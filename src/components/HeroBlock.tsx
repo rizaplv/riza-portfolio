@@ -73,7 +73,7 @@ export default function HeroBlock() {
             >
               <a
                 href="#work"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3 font-medium text-white transition-colors hover:bg-accent/90"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3 font-medium text-canvas transition-colors hover:bg-accent/90"
               >
                 View My Work
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -110,7 +110,7 @@ export default function HeroBlock() {
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={social.label}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-surface text-ink transition-colors hover:bg-accent hover:text-white"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-surface text-ink transition-colors hover:bg-accent hover:text-canvas"
                 >
                   <svg
                     viewBox="0 0 24 24"
