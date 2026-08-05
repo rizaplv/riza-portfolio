@@ -4,6 +4,7 @@ import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import AnimatedStatement from "@/components/AnimatedStatement";
 import HeroBlock from "@/components/HeroBlock";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -79,13 +80,21 @@ export default async function HomePage() {
           <h2 className="text-4xl font-bold">Selected Work</h2>
         </Reveal>
         {projects.length > 0 ? (
-          <ProjectGrid projects={parsedProjects} />
+          <ProjectGrid projects={parsedProjects.filter((p) => p.featured)} />
         ) : (
           <div className="text-center py-20 text-ink-light">
             <p className="text-lg mb-4">Projects are being loaded from the database.</p>
             <p>Run the seed script to populate initial data.</p>
           </div>
         )}
+        <div className="mt-12 text-center">
+          <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:underline">
+            View All Projects
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14m0 0-6-6m6 6-6 6" />
+            </svg>
+          </Link>
+        </div>
       </section>
 
       <section id="about" className="px-16 py-section bg-canvas-alt page-enter">

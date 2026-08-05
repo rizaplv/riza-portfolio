@@ -17,6 +17,7 @@ const SOCIALS = [
     label: "Email",
     href: "mailto:rizaplv@gmail.com",
     d: "M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm18 3-10 6L2 6",
+    stroke: true,
   },
 ];
 
@@ -80,10 +81,17 @@ export default function HeroBlock() {
                 </svg>
               </a>
               <a
-                href="#contact"
+                href="/CV-Riza.pdf"
+                target="_blank"
+                rel="noopener"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-3 font-medium text-ink transition-colors hover:bg-surface"
               >
-                Get In Touch
+                Download CV
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <path d="m7 10 5 5 5-5" />
+                  <path d="M12 15V3" />
+                </svg>
               </a>
             </motion.div>
 
@@ -104,7 +112,16 @@ export default function HeroBlock() {
                   aria-label={social.label}
                   className="flex h-12 w-12 items-center justify-center rounded-full bg-surface text-ink transition-colors hover:bg-accent hover:text-white"
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                    fill={social.stroke ? "none" : "currentColor"}
+                    stroke={social.stroke ? "currentColor" : "none"}
+                    strokeWidth={social.stroke ? 2 : 0}
+                    strokeLinecap={social.stroke ? "round" : undefined}
+                    strokeLinejoin={social.stroke ? "round" : undefined}
+                  >
                     <path d={social.d} />
                   </svg>
                 </motion.a>
