@@ -8,17 +8,6 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-const CORE_SKILLS = ["UI/UX Design", "Visual Design", "3D Modeling", "Motion Graphics", "Branding", "Stage Design"];
-const TOOLS = ["Photoshop", "Illustrator", "After Effects", "Premiere Pro", "SketchUp", "Blender", "Figma", "Resolume"];
-
-const EXPERIENCE = [
-  { title: "Graphic Designer & 3D Designer", company: "Artha Kencana Cendekia", period: "Nov 2024 – Present" },
-  { title: "Compositor & UI Designer", company: "Mytripology", period: "Mar 2021 – Nov 2024" },
-  { title: "Compositor", company: "Firenze Digital", period: "Feb 2020 – Sep 2020" },
-  { title: "Graphic Designer", company: "PT Hero Supermarket Tbk", period: "Nov 2019 – Jan 2020" },
-  { title: "Graphic Designer & Multimedia Crew", company: "INFINITE Live", period: "Aug 2017 – Oct 2019" },
-];
-
 const ABOUT_HIGHLIGHTS = [
   {
     label: "7+ Years of Experience",
@@ -163,71 +152,6 @@ export default async function HomePage() {
                 ))}
               </ul>
             </Reveal>
-          </div>
-
-          {/* Detail: experience, skills, tools, education, connect */}
-          <div className="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-2">
-            <div className="space-y-10">
-              <Reveal delay={1}>
-                <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Work Experience</h3>
-                <div className="space-y-3">
-                  {EXPERIENCE.map((exp) => (
-                    <div key={exp.company} className="border-b border-border pb-2 last:border-0 last:pb-0">
-                      <p className="font-medium text-ink">{exp.title}</p>
-                      <p className="text-sm text-accent">{exp.company}</p>
-                      <p className="text-xs text-ink-light">{exp.period}</p>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            </div>
-
-            <div className="space-y-10">
-              <Reveal delay={3}>
-                <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Core Skills</h3>
-                <div className="flex flex-wrap gap-2">
-                  {CORE_SKILLS.map((skill) => (
-                    <span key={skill} className="px-3 py-1 text-xs bg-surface border border-border rounded-full text-ink-light">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </Reveal>
-
-              <Reveal delay={4}>
-                <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Tools</h3>
-                <div className="flex flex-wrap gap-2">
-                  {TOOLS.map((tool) => (
-                    <span key={tool} className="px-3 py-1 text-xs border border-border rounded-full">
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </Reveal>
-
-              <Reveal delay={5}>
-                <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Education</h3>
-                <div className="space-y-2">
-                  <div>
-                    <p className="font-medium text-ink">Bachelor&apos;s Degree, Design and Visual Communications</p>
-                    <p className="text-sm text-ink-light">Universitas Mercu Buana — 2023</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-ink">UI/UX Research &amp; Design Certification</p>
-                    <p className="text-sm text-ink-light">Binar Academy — Dec 2023</p>
-                  </div>
-                </div>
-              </Reveal>
-
-              <Reveal delay={6}>
-                <h3 className="text-xs font-medium text-ink-light uppercase tracking-widest mb-3">Connect</h3>
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <a href="https://behance.net/rizaplv" target="_blank" rel="noopener" className="text-accent hover:underline">Behance</a>
-                  <a href="https://linkedin.com/in/rizaplv" target="_blank" rel="noopener" className="text-accent hover:underline">LinkedIn</a>
-                  <a href="mailto:rizaplv@gmail.com" className="text-accent hover:underline">rizaplv@gmail.com</a>
-                </div>
-              </Reveal>
-            </div>
           </div>
         </div>
       </section>
