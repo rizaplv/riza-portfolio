@@ -8,7 +8,7 @@ const TOOLS = [
   { name: "Blender", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" },
   { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
   { name: "SketchUp", icon: "https://cdn.simpleicons.org/sketchup" },
-  { name: "Resolume", icon: null },
+  { name: "Resolume", icon: "/logos/resolume-arena.svg" },
 ];
 
 // Circle positions: 8 icons at 45° steps starting at top, radius 250px
@@ -17,16 +17,6 @@ const POSITIONS = TOOLS.map((_, i) => {
   const a = (i / TOOLS.length) * Math.PI * 2 - Math.PI / 2;
   return { x: Math.round(R * Math.cos(a)), y: Math.round(R * Math.sin(a)) };
 });
-
-// ponytail: no CDN icon for Resolume — inline purple badge; swap for brand SVG when one exists
-const ResolumeIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
-    <rect width="24" height="24" rx="5" fill="#6C3FC1" />
-    <text x="12" y="16.5" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">
-      Re
-    </text>
-  </svg>
-);
 
 export default function AnimatedStatement() {
   return (
@@ -51,17 +41,13 @@ export default function AnimatedStatement() {
                 className="tool-float flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-[0_10px_30px_rgba(2,6,23,0.10)] ring-1 ring-black/5"
                 style={{ animationDelay: `${i * 0.4}s` }}
               >
-                {tool.icon ? (
-                  <img
-                    src={tool.icon}
-                    alt=""
-                    loading="lazy"
-                    draggable={false}
-                    className="pointer-events-none h-7 w-7"
-                  />
-                ) : (
-                  <ResolumeIcon />
-                )}
+                <img
+                  src={tool.icon}
+                  alt=""
+                  loading="lazy"
+                  draggable={false}
+                  className="pointer-events-none h-7 w-7"
+                />
               </div>
               <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-dark px-3 py-1 text-xs font-medium text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100">
                 {tool.name}
