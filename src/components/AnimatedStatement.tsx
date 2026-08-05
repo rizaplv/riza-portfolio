@@ -1,7 +1,5 @@
 "use client";
 
-import type { CSSProperties, PointerEvent } from "react";
-
 const TOOLS = [
   { name: "Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg" },
   { name: "Illustrator", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" },
@@ -10,78 +8,67 @@ const TOOLS = [
   { name: "Blender", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" },
   { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
   { name: "SketchUp", icon: "https://cdn.simpleicons.org/sketchup" },
+  { name: "Resolume", icon: null },
 ];
 
-// Arch per card: edges lowest, middle pair highest (deck-of-cards fan, md+ only)
-const ARCH = [0, -18, -30, -36, -36, -30, -18];
+// Circle positions: 8 icons at 45° steps starting at top, radius 250px
+const R = 250;
+const POSITIONS = TOOLS.map((_, i) => {
+  const a = (i / TOOLS.length) * Math.PI * 2 - Math.PI / 2;
+  return { x: Math.round(R * Math.cos(a)), y: Math.round(R * Math.sin(a)) };
+});
 
-const SPRING = "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)";
-
-function startDrag(e: PointerEvent<HTMLDivElement>) {
-  const el = e.currentTarget;
-  el.setPointerCapture(e.pointerId);
-  el.dataset.x = "0";
-  el.dataset.y = "0";
-  el.dataset.dragging = "1";
-  el.style.transition = "none";
-  el.style.zIndex = "30";
-}
-
-function moveDrag(e: PointerEvent<HTMLDivElement>) {
-  const el = e.currentTarget;
-  if (el.dataset.dragging !== "1") return;
-  const x = (parseFloat(el.dataset.x ?? "0") || 0) + e.movementX;
-  const y = (parseFloat(el.dataset.y ?? "0") || 0) + e.movementY;
-  el.dataset.x = String(x);
-  el.dataset.y = String(y);
-  el.style.transform = `translate(${x}px, ${y}px)`;
-}
-
-function endDrag(e: PointerEvent<HTMLDivElement>) {
-  const el = e.currentTarget;
-  el.dataset.dragging = "";
-  el.style.transition = SPRING;
-  el.style.transform = "";
-  el.style.zIndex = "";
-}
+// ponytail: no CDN icon for Resolume — inline purple badge; swap for brand SVG when one exists
+const ResolumeIcon = () => (
+  <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+    <rect width="24" height="24" rx="5" fill="#6C3FC1" />
+    <text x="12" y="16.5" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">
+      Re
+    </text>
+  </svg>
+);
 
 export default function AnimatedStatement() {
   return (
     <section className="relative mx-auto max-w-5xl px-6 py-section text-center">
-      <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
-        Tools I Use
-      </h2>
-      <p className="mt-4 text-sm text-ink-light">
-        The tools I reach for when designing and building digital products.
-      </p>
+      <div className="relative mx-auto h-[560px] max-w-[560px]">
+        <h2 className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+          Tools I Use
+        </h2>
 
-      <div className="mt-12 flex flex-wrap items-center justify-center gap-3 md:flex-nowrap md:gap-0">
-        {TOOLS.map((tool, i) => (
-          <div
-            key={tool.name}
-            title={tool.name}
-            aria-label={tool.name}
-            className={`touch-none select-none ${i === 0 ? "" : "md:-ml-6"} cursor-grab active:cursor-grabbing`}
-            style={{ transition: SPRING }}
-            onPointerDown={startDrag}
-            onPointerMove={moveDrag}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-          >
+        <div className="absolute inset-0 origin-center scale-[0.58] sm:scale-[0.75] md:scale-100">
+          {TOOLS.map((tool, i) => (
             <div
-              className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_10px_30px_rgba(2,6,23,0.10)] ring-1 ring-black/5 md:translate-y-[var(--arch)]"
-              style={{ "--arch": `${ARCH[i]}px` } as CSSProperties}
+              key={tool.name}
+              aria-label={tool.name}
+              className="group absolute"
+              style={{
+                left: `calc(50% + ${POSITIONS[i].x}px)`,
+                top: `calc(50% + ${POSITIONS[i].y}px)`,
+              }}
             >
-              <img
-                src={tool.icon}
-                alt=""
-                loading="lazy"
-                draggable={false}
-                className="pointer-events-none h-8 w-8"
-              />
+              <div
+                className="tool-float flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-[0_10px_30px_rgba(2,6,23,0.10)] ring-1 ring-black/5"
+                style={{ animationDelay: `${i * 0.4}s` }}
+              >
+                {tool.icon ? (
+                  <img
+                    src={tool.icon}
+                    alt=""
+                    loading="lazy"
+                    draggable={false}
+                    className="pointer-events-none h-7 w-7"
+                  />
+                ) : (
+                  <ResolumeIcon />
+                )}
+              </div>
+              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-dark px-3 py-1 text-xs font-medium text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                {tool.name}
+              </span>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
