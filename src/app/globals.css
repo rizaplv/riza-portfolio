@@ -61,21 +61,6 @@ tr.reveal {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* ── Floating tool logos (AnimatedStatement) ──────────────── */
-.tool-float {
-  will-change: transform;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
-}
-
-@keyframes float {
-  from { transform: translateY(0) rotate(-3deg); }
-  to   { transform: translateY(-14px) rotate(3deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tool-float { animation: none !important; }
-}
-
 /* ── Rich text (description editor + project page) ───────── */
 .rich-text { line-height: 1.7; word-break: break-word; }
 .rich-text p { margin: 0 0 1rem; }

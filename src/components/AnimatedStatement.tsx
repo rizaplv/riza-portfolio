@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import type { CSSProperties, PointerEvent } from "react";
 
 const TOOLS = [
   { name: "Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg" },
@@ -12,106 +12,77 @@ const TOOLS = [
   { name: "SketchUp", icon: "https://cdn.simpleicons.org/sketchup" },
 ];
 
-// Position + float delay/offset per icon (desktop only — hidden on mobile)
-const ICON_POSITIONS = [
-  { top: "-2rem", left: "-4rem", delay: "0s", dur: "7s" },
-  { top: "1rem", left: "-9rem", delay: "1.2s", dur: "8s" },
-  { top: "55%", left: "-6.5rem", delay: "2.1s", dur: "6.5s" },
-  { top: "-1.5rem", right: "-4.5rem", delay: "0.6s", dur: "7.5s" },
-  { top: "1.5rem", right: "-9rem", delay: "1.8s", dur: "8.5s" },
-  { top: "50%", right: "-7rem", delay: "2.6s", dur: "6s" },
-  { top: "-3rem", right: "22%", delay: "3.2s", dur: "7s" },
-];
+// Arch per card: edges lowest, middle pair highest (deck-of-cards fan, md+ only)
+const ARCH = [0, -18, -30, -36, -36, -30, -18];
 
-const ICON_SIZES = [56, 40, 48, 52, 42, 46, 44];
+const SPRING = "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)";
+
+function startDrag(e: PointerEvent<HTMLDivElement>) {
+  const el = e.currentTarget;
+  el.setPointerCapture(e.pointerId);
+  el.dataset.x = "0";
+  el.dataset.y = "0";
+  el.dataset.dragging = "1";
+  el.style.transition = "none";
+  el.style.zIndex = "30";
+}
+
+function moveDrag(e: PointerEvent<HTMLDivElement>) {
+  const el = e.currentTarget;
+  if (el.dataset.dragging !== "1") return;
+  const x = (parseFloat(el.dataset.x ?? "0") || 0) + e.movementX;
+  const y = (parseFloat(el.dataset.y ?? "0") || 0) + e.movementY;
+  el.dataset.x = String(x);
+  el.dataset.y = String(y);
+  el.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function endDrag(e: PointerEvent<HTMLDivElement>) {
+  const el = e.currentTarget;
+  el.dataset.dragging = "";
+  el.style.transition = SPRING;
+  el.style.transform = "";
+  el.style.zIndex = "";
+}
 
 export default function AnimatedStatement() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [visibleCount, setVisibleCount] = useState(0);
-  const words = TOOLS.map((t) => t.name).join(" · ").split(" ");
-
-  const onScroll = useCallback(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const winH = window.innerHeight;
-
-    // Entry point: top of element crosses 80% viewport height
-    const entry = winH * 0.8 - rect.top;
-    // Exit point: bottom of element leaves 20% viewport height
-    const exit = winH * 0.2 - rect.bottom + rect.height;
-
-    let progress: number;
-    if (entry <= 0) {
-      progress = 0; // haven't entered yet
-    } else if (exit <= 0) {
-      // between entry (0) and exit, map to 0..1
-      const range = winH * 0.6 + rect.height * 0.2;
-      progress = entry / range;
-    } else {
-      progress = 1; // fully passed
-    }
-    progress = Math.min(1, Math.max(0, progress));
-
-    // fade out fully when element completely scrolled past top
-    if (rect.bottom < 0 || rect.top > winH) {
-      setVisibleCount(0);
-    } else {
-      setVisibleCount(Math.ceil(progress * words.length));
-    }
-  }, [words.length]);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const onScrollThrottled = () => requestAnimationFrame(onScroll);
-    onScroll();
-    window.addEventListener("scroll", onScrollThrottled, { passive: true });
-    return () => window.removeEventListener("scroll", onScrollThrottled);
-  }, [onScroll]);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative px-6 py-section max-w-5xl mx-auto text-center"
-    >
-      {/* Floating tool logos around the statement */}
-      <div className="hidden md:block" aria-hidden="true">
+    <section className="relative mx-auto max-w-5xl px-6 py-section text-center">
+      <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+        Tools I Use
+      </h2>
+      <p className="mt-4 text-sm text-ink-light">
+        The tools I reach for when designing and building digital products.
+      </p>
+
+      <div className="mt-12 flex flex-wrap items-center justify-center gap-3 md:flex-nowrap md:gap-0">
         {TOOLS.map((tool, i) => (
-          <img
+          <div
             key={tool.name}
-            src={tool.icon}
-            alt=""
-            loading="lazy"
-            style={{
-              position: "absolute",
-              width: ICON_SIZES[i],
-              height: ICON_SIZES[i],
-              ...ICON_POSITIONS[i],
-              animation: `float ${ICON_POSITIONS[i].dur} ease-in-out ${ICON_POSITIONS[i].delay} infinite alternate`,
-            }}
-            className="tool-float opacity-70"
-          />
+            title={tool.name}
+            aria-label={tool.name}
+            className={`touch-none select-none ${i === 0 ? "" : "md:-ml-6"} cursor-grab active:cursor-grabbing`}
+            style={{ transition: SPRING }}
+            onPointerDown={startDrag}
+            onPointerMove={moveDrag}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+          >
+            <div
+              className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_10px_30px_rgba(2,6,23,0.10)] ring-1 ring-black/5 md:translate-y-[var(--arch)]"
+              style={{ "--arch": `${ARCH[i]}px` } as CSSProperties}
+            >
+              <img
+                src={tool.icon}
+                alt=""
+                loading="lazy"
+                draggable={false}
+                className="pointer-events-none h-8 w-8"
+              />
+            </div>
+          </div>
         ))}
       </div>
-
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-[1.35] tracking-tight">
-        {words.map((word, wi) => (
-          <span key={wi} className="inline">
-            <span
-              className="inline-block transition-all duration-300 ease-out"
-              style={{
-                opacity: wi < visibleCount ? 1 : 0,
-                transform: wi < visibleCount ? "translateY(0)" : "translateY(12px)",
-              }}
-            >
-              {word}
-            </span>
-            {wi < words.length - 1 ? " " : ""}
-          </span>
-        ))}
-      </h2>
-      <p className="mt-4 text-sm text-ink-light">Tools I work with every day</p>
     </section>
   );
 }
