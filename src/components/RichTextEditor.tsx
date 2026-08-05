@@ -17,16 +17,17 @@ export default function RichTextEditor({
   minHeight = 160,
 }: RichTextEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
-  const mountedRef = useRef(false);
+  const lastEmittedRef = useRef<string | undefined>(undefined);
   const [active, setActive] = useState<Record<string, boolean>>({});
 
-  // Load external value into the editor once on mount (parent remounts us
-  // via key when switching projects, so we never fight the caret here).
+  // Sync external value (initial load, project switch, post-save refetch)
+  // without fighting the caret: skip when the change originated from our
+  // own onChange (parent echoes back the same html).
   useEffect(() => {
     const el = editorRef.current;
-    if (!el || mountedRef.current) return;
+    if (!el) return;
+    if (value === lastEmittedRef.current) return;
     el.innerHTML = isHtml(value) ? value : plainToHtml(value);
-    mountedRef.current = true;
   }, [value]);
 
   const refreshActive = () => {
@@ -52,6 +53,7 @@ export default function RichTextEditor({
     // Guard: skip when value is empty but editor has a trailing <br>
     // (contentEditable keeps one when emptied) — avoids infinite churn.
     if (html === "<br>" && !value.trim()) return;
+    lastEmittedRef.current = html;
     onChange(html);
   };
 
