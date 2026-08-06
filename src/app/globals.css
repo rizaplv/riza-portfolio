@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #191919;
+  --color-ink-light: #696969;
+  --color-canvas: #FFFFFF;
+  --color-canvas-alt: #F9F9F9;
+  --color-surface: #F2F2F2;
+  --color-accent: #0057FF;
+  --color-accent-light: #E5EEFF;
+  --color-gold: #C8A96E;
+  --color-gold-light: #F5EFE3;
+  --color-dark: #111111;
+  --color-dark-soft: #1A1A1A;
+  --color-border: #E5E5E5;
+  --color-stage-purple: #6C3FC0;
+  --color-stage-blue: #2E5DE8;
+  --color-stage-red: #C0392B;
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-body: "Inter", "SF Pro Text", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --spacing-section: 6rem;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+  overflow-x: clip;
+}
+
+html { scroll-behavior: smooth; }
+::selection { background: var(--color-accent); color: white; }
+
+/* ── Fade-in reveal animation ────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — set --i inline (0,1,2,...) for delay */
+.reveal[style*="--i"] {
+  transition-delay: calc(var(--i) * 130ms);
+}
+
+/* Table rows: transform doesn't apply to table-row, fade opacity only */
+tr.reveal {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Floating tool logos (AnimatedStatement) ──────────────── */
+.tool-float {
+  will-change: transform;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+}
+
+@keyframes float {
+  from { transform: translateY(0) rotate(-3deg); }
+  to   { transform: translateY(-14px) rotate(3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-float { animation: none !important; }
+}
+
+/* ── Rich text (description editor + project page) ───────── */
+.rich-text { line-height: 1.7; word-break: break-word; }
+.rich-text p { margin: 0 0 1rem; }
+.rich-text p:last-child { margin-bottom: 0; }
+.rich-text ul { list-style: disc; padding-left: 1.5rem; margin: 0 0 1rem; }
+.rich-text ol { list-style: decimal; padding-left: 1.5rem; margin: 0 0 1rem; }
+.rich-text li { margin: 0.25rem 0; }
+.rich-text li::marker { color: var(--color-accent); }
+.rich-text a { color: var(--color-accent); text-decoration: underline; }
+.rich-text b, .rich-text strong { font-weight: 700; }
+.rich-text i, .rich-text em { font-style: italic; }
+.rich-text u { text-decoration: underline; }
+.rich-text s, .rich-text strike { text-decoration: line-through; }
+
+/* Editor placeholder (visible only when content is empty) */
+.rich-text[contenteditable="true"]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--color-ink-light, #6b7280);
+  pointer-events: none;
+}
+
+/* ── Spinner (smooth triple-ring) ────────────────────────── */
+.spinner {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+.spinner span {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--color-accent);
+  border-top-color: transparent;
+  animation: spin 0.9s linear infinite;
+}
+.spinner span:nth-child(2) { inset: 5px; opacity: 0.6; animation-direction: reverse; }
+.spinner span:nth-child(3) { inset: 10px; opacity: 0.3; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Save button pulse ───────────────────────────────────── */
+.btn-saving {
+  position: relative;
+  pointer-events: none;
+}
+.btn-saving::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.1s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+/* ── Route fade (page transitions) ───────────────────────── */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: pageIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Masonry gallery (single column) ─────────────────────── */
+.masonry-gallery {
+  column-count: 1;
+  column-gap: 1.5rem;
+  width: 100%;
+}
+
+.masonry-item {
+  /* break-inside-avoid is set inline via Tailwind class on the figure */
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masonry-gallery {
+    column-count: 1;
+    column-gap: 1.5rem;
+  }
+}

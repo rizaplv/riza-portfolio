@@ -1,0 +1,22 @@
+/* Auto-plays on every mount (Next.js remounts template.tsx on each navigation).
+   No JS timing needed — pure CSS so the fade always fires. */
+.admin-page-enter {
+  animation: adminPageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes adminPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-page-enter {
+    animation: none;
+  }
+}
