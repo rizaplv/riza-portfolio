@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, MotionConfig } from "framer-motion";
+import { motion, MotionConfig, type Variants } from "framer-motion";
+import { useState } from "react";
 import { TextLoop } from "@/components/ui/text-loop";
 
 const SPECIALTIES = [
@@ -32,6 +33,14 @@ const SOCIALS = [
 ];
 
 export default function HeroBlock() {
+  const [specialtyIndex, setSpecialtyIndex] = useState(0);
+
+  const specialtyVariants: Variants = {
+    initial: { y: 20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: specialtyIndex % 2 === 0 ? -20 : 20, opacity: 0 },
+  };
+
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-canvas px-6 py-24">
       {/* Animated background grid */}
@@ -53,7 +62,12 @@ export default function HeroBlock() {
               transition={{ delay: 0.1, duration: 0.6 }}
               className="mb-8 text-xs font-medium uppercase tracking-widest text-ink-light"
             >
-              <TextLoop interval={2.5}>
+              <TextLoop
+                interval={2.5}
+                variants={specialtyVariants}
+                onIndexChange={setSpecialtyIndex}
+                transition={{ duration: 0.3 }}
+              >
                 {SPECIALTIES.map((text) => (
                   <span key={text} className="block">
                     {text}
