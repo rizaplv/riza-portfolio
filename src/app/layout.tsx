@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-body", display: "swa
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rizaplv.vercel.app"),
   title: "Muhammad Riza Pahlevie — Portfolio",
   description: "Portfolio of Muhammad Riza Pahlevie — Full-Stack Visual Designer · From Pixels to 3D, based in Tangerang Selatan, Indonesia.",
   keywords: [
