@@ -73,7 +73,7 @@ export default function HeroBlock() {
             >
               <a
                 href="#work"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="inline-flex items-center gap-2 rounded-full bg-ink px-8 py-3 font-medium text-canvas transition-colors hover:bg-ink/90"
               >
                 View My Work
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
