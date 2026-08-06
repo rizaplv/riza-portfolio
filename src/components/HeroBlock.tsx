@@ -36,10 +36,12 @@ export default function HeroBlock() {
   const [specialtyIndex, setSpecialtyIndex] = useState(0);
 
   const specialtyVariants: Variants = {
-    initial: { y: 20, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    exit: { y: specialtyIndex % 2 === 0 ? -20 : 20, opacity: 0 },
+    initial: { y: 14, opacity: 0, filter: "blur(6px)" },
+    animate: { y: 0, opacity: 1, filter: "blur(0px)" },
+    exit: { y: specialtyIndex % 2 === 0 ? -14 : 14, opacity: 0, filter: "blur(6px)" },
   };
+
+  const specialtyTransition = { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-canvas px-6 py-24">
@@ -66,7 +68,7 @@ export default function HeroBlock() {
                 interval={2.5}
                 variants={specialtyVariants}
                 onIndexChange={setSpecialtyIndex}
-                transition={{ duration: 0.3 }}
+                transition={specialtyTransition}
               >
                 {SPECIALTIES.map((text) => (
                   <span key={text} className="block">

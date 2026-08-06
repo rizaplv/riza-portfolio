@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, type Transition, type Variants } from "framer-motion";
+import { motion, type Transition, type Variants } from "framer-motion";
 import { useState, useEffect, Children, type ReactNode } from "react";
 
 type TextLoopProps = {
@@ -27,35 +27,39 @@ export function TextLoop({
     const intervalMs = interval * 1000;
 
     const timer = setInterval(() => {
-      setCurrentIndex((current) => {
-        const next = (current + 1) % items.length;
-        onIndexChange?.(next);
-        return next;
-      });
+      setCurrentIndex((current) => (current + 1) % items.length);
     }, intervalMs);
     return () => clearInterval(timer);
-  }, [items.length, interval, onIndexChange]);
+  }, [items.length, interval]);
+
+  useEffect(() => {
+    onIndexChange?.(currentIndex);
+  }, [currentIndex, onIndexChange]);
 
   const motionVariants: Variants = {
-    initial: { y: 20, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    exit: { y: -20, opacity: 0 },
+    initial: { y: 12, opacity: 0, filter: "blur(4px)" },
+    animate: { y: 0, opacity: 1, filter: "blur(0px)" },
+    exit: { y: -12, opacity: 0, filter: "blur(4px)" },
   };
 
   return (
-    <span className={["relative inline-block whitespace-nowrap", className].filter(Boolean).join(" ")}>
-      <AnimatePresence mode="popLayout" initial={false}>
+    <span
+      className={["grid justify-center whitespace-nowrap", className].filter(Boolean).join(" ")}
+      style={{ gridTemplateColumns: "max-content" }}
+    >
+      {items.map((item, index) => (
         <motion.span
-          key={currentIndex}
-          initial="initial"
-          animate="animate"
-          exit="exit"
+          key={index}
+          aria-hidden={index !== currentIndex}
+          style={{ gridArea: "1 / 1" }}
+          initial="exit"
+          animate={index === currentIndex ? "animate" : "exit"}
           transition={transition}
           variants={variants || motionVariants}
         >
-          {items[currentIndex]}
+          {item}
         </motion.span>
-      </AnimatePresence>
+      ))}
     </span>
   );
 }
