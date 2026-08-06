@@ -10,6 +10,8 @@
   --color-surface: #F2F2F2;
   --color-accent: #0057FF;
   --color-accent-light: #E5EEFF;
+  --color-primary: #0057FF;
+  --color-primary-foreground: #FFFFFF;
   --color-gold: #C8A96E;
   --color-gold-light: #F5EFE3;
   --color-dark: #111111;
@@ -33,6 +35,8 @@
   --color-surface: #1E1E23;
   --color-accent: #5B9BFF;
   --color-accent-light: #16233F;
+  --color-primary: #0057FF;
+  --color-primary-foreground: #FFFFFF;
   --color-gold: #D4B87E;
   --color-gold-light: #2B2416;
   --color-border: #2A2A31;

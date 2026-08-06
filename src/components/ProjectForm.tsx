@@ -530,7 +530,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           <button
             type="submit"
             disabled={saving || uploading}
-            className={`w-full py-3 bg-accent text-canvas rounded-xl font-medium hover:bg-accent/90 disabled:opacity-70 transition-all ${saving || uploading ? "btn-saving" : ""}`}
+            className={`w-full py-3 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 disabled:opacity-70 transition-all ${saving || uploading ? "btn-saving" : ""}`}
           >
             {saving ? "Saving..." : uploading ? "Uploading..." : projectId ? "Update Project" : "Create Project"}
           </button>

@@ -30,7 +30,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             onClick={() => setFilter(cat)}
             className={`px-4 py-1.5 text-sm rounded-full border transition-all ${
               filter === cat
-                ? "bg-ink text-white border-ink"
+                ? "bg-ink text-canvas border-ink"
                 : "bg-transparent text-ink-light border-border hover:border-ink-light"
             }`}
           >

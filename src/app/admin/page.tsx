@@ -65,7 +65,7 @@ export default function AdminPage() {
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           <h1 className="text-lg font-bold">Portfolio Admin</h1>
           <div className="flex items-center gap-4">
-            <button onClick={() => navigateWithFade("/admin/projects/new")} className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors">
+            <button onClick={() => navigateWithFade("/admin/projects/new")} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
               + New Project
             </button>
             <Link href="/" target="_blank" className="text-sm text-ink-light hover:text-ink transition-colors">View Site ↗</Link>

@@ -59,7 +59,7 @@ export default function LoginPage() {
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button type="submit" disabled={loading}
-            className="w-full py-2.5 bg-ink text-white rounded-xl font-medium hover:bg-ink/90 disabled:opacity-50 transition-all">
+            className="w-full py-2.5 bg-ink text-canvas rounded-xl font-medium hover:bg-ink/90 disabled:opacity-50 transition-all">
             {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
