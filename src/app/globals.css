@@ -205,3 +205,21 @@ tr.reveal {
     column-gap: 1.5rem;
   }
 }
+
+/* ── Smooth theme transition (active only while toggling) ── */
+html.theme-anim,
+html.theme-anim * {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    fill 0.4s ease,
+    stroke 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim,
+  html.theme-anim * {
+    transition: none;
+  }
+}

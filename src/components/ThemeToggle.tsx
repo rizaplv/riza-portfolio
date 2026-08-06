@@ -11,13 +11,16 @@ export default function ThemeToggle() {
 
   const toggle = () => {
     const next = !dark;
+    const html = document.documentElement;
+    html.classList.add("theme-anim");
+    html.classList.toggle("dark", next);
     setDark(next);
-    document.documentElement.classList.toggle("dark", next);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
     } catch {
       /* private mode */
     }
+    window.setTimeout(() => html.classList.remove("theme-anim"), 450);
   };
 
   return (
