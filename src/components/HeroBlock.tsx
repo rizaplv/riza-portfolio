@@ -1,6 +1,16 @@
 "use client";
 
 import { motion, MotionConfig } from "framer-motion";
+import { TextLoop } from "@/components/ui/text-loop";
+
+const SPECIALTIES = [
+  "Graphic Design",
+  "Motion Design",
+  "Video Editing",
+  "3D Design",
+  "UI Design",
+  "Visual Operator",
+];
 
 const SOCIALS = [
   {
@@ -41,10 +51,16 @@ export default function HeroBlock() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
-              className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-canvas px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-ink-light"
+              className="mb-8 inline-flex items-center gap-2 overflow-hidden rounded-full border border-border bg-canvas px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-ink-light"
             >
-              <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
-              Available for Freelance &amp; Fulltime
+              <span className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <TextLoop interval={2.5}>
+                {SPECIALTIES.map((text) => (
+                  <span key={text} className="block">
+                    {text}
+                  </span>
+                ))}
+              </TextLoop>
             </motion.p>
 
             <motion.h1
