@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -6,6 +7,15 @@ import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e0e11" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rizaplv.vercel.app"),
@@ -66,10 +76,6 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0e11" },
-  ],
   alternates: {
     canonical: "https://rizaplv.vercel.app",
   },
