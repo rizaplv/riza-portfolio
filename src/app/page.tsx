@@ -156,7 +156,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="px-16 max-w-7xl mx-auto w-full page-enter">
+      <section id="contact" className="px-6 sm:px-16 py-section max-w-7xl mx-auto w-full page-enter">
         <ContactForm />
       </section>
     </>

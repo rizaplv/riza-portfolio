@@ -24,8 +24,9 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="py-section">
-      <h2 className="text-3xl font-bold mb-2">Get In Touch</h2>
+    <div>
+      <p className="text-sm font-medium text-accent tracking-widest uppercase mb-2">Contact</p>
+      <h2 className="text-4xl font-bold mb-2">Get In Touch</h2>
       <p className="text-ink-light mb-8 max-w-md">
         Have a project in mind? Let's work together.
       </p>
@@ -82,6 +83,6 @@ export default function ContactForm() {
           )}
         </form>
       )}
-    </section>
+    </div>
   );
 }

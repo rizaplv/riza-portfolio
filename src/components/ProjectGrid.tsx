@@ -22,7 +22,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <section id="work">
+    <section>
       <div className="flex flex-wrap items-center gap-3 mb-10">
         {categories.map((cat) => (
           <button
